@@ -4,18 +4,9 @@ qui comporte le mot "égalité"
 """
 
 
-"""
-TODO
-1) Améliorer le code des fonctions
-2) Automatiser le processus sur l'ensemble des pages
-3) Transférer les données dans un tableau Excel
-
-"""
-
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 import openpyxl
-import re
 
 excel = openpyxl.Workbook()
 sheet = excel.active
@@ -44,29 +35,24 @@ def get_content(url):
             return [...document.querySelectorAll('span[data-field-selector="creator"]')].map(span => span.innerText);
         }''')
 
+        # TODO pour le lieu...
+        place_data = ""
+
         # TODO pour la date car tous les items n'ont pas forcément une date et cela risque de perturber les associations diverses
-
         year_data = page.evaluate('''() => {
-            return [...document.querySelectorAll('span[data-field-selector="creationdate"], span[data-field-selector="isPartOf"]')].map(span => span.innerText);
+            return [...document.querySelectorAll('span[data-field-selector="creationdate"]')].map(span => span.innerText);
         }''')
-
-
-        print(year_data)
         
 
         soup = BeautifulSoup(page.content(), 'lxml')
         browser.close()
-        print("ok")
 
         return [soup, creator_data, year_data]
     
-
 #Fonction qui va extraire les différentes valeurs dont on a besoin 
 def extract_content():
-    elements = get_content("a")
-    soup = elements[0]
-    createurs = elements[1]
-    annee = elements[2]
+    soup = get_content("a")[0]
+    createurs = get_content("a")[1]
     data = []
 
     # On va mettre les éléments dans une liste de dictionnaires...
@@ -80,32 +66,13 @@ def extract_content():
             'Accessibilité': "Accessible en ligne" if item.select_one(".availability-status").text=="Accès en ligne" else "Sur place",
             'Année': "...",
             'Type de média' :item.select_one(".media-content-type").text,
-            #'Localisation': "...", pas pour le moment
+            'Localisation': "...",
         })
 
     # Ici pas de soucis... On a exactement le bon nombre de créateurs alors on peut les rajouter directement dans l'ordre
     for i in range(len(data)):
         data[i]["Auteur/Réalisateur"] = createurs[i]
     
-    #print(data)
+    print(data)
 
-#extract_content()
-
-
-#fonction pour extraire l'année d'une chaine de caractère...
-def recup_annee(ch):
-    res = re.findall(r"\b\d{4}\b",ch)
-
-    #nettoyer les valeurs qui supérieure à une année choisie arbitrairement
-    if len(res)>0:
-        for e in res:
-            if int(e) > 2026:
-                res.remove(e)
-
-    return(res)
-
-# tests
-
-print(recup_annee("Le 30 janvier 2024"))
-print(recup_annee("45678 2023 2023 2023 2026 2034"))
-print(recup_annee("34-34"))
+extract_content()
