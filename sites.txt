@@ -1,5 +1,0 @@
-https://realpython.com/python-web-scraping-practical-introduction/
-https://www.data-bird.co/blog/web-scraping-python
-https://brightdata.com/blog/how-tos/web-scraping-with-python
-https://www.geeksforgeeks.org/python-web-scraping-tutorial/
-https://catalogue.univ-reunion.fr/primo-explore/search?query=any,contains,%C3%A9galit%C3%A9&tab=default_tab&search_scope=LSS_TOUT&vid=URN&offset=0

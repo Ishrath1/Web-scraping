@@ -1,0 +1,40 @@
+----------------
+ SORTIE CONSOLE 
+----------------
+
+
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "C:\Users\ishra\OneDrive\Documents\Web-scrapping\main.py", line 210, in <module>
+  File "C:\Users\ishra\OneDrive\Documents\Web-scrapping\main.py", line 210, in <module>
+    scraper()
+    scraper()
+  File "C:\Users\ishra\OneDrive\Documents\Web-scrapping\main.py", line 197, in scraper
+    new_offset = extract_content(new_offset)
+  File "C:\Users\ishra\OneDrive\Documents\Web-scrapping\main.py", line 106, in extract_content
+    soup, new_offset=get_content(offset)
+    soup, new_offset=get_content(offset)
+  File "C:\Users\ishra\OneDrive\Documents\Web-scrapping\main.py", line 45, in get_content
+  File "C:\Users\ishra\OneDrive\Documents\Web-scrapping\main.py", line 45, in get_content
+    page.wait_for_selector("div[id=searchResultsContainer]")
+  File "C:\Users\ishra\AppData\Local\Programs\Python\Python39\lib\site-packages\playwright\sync_api\_generated.py", line 8006, in wait_for_selector
+    self._sync(
+  File "C:\Users\ishra\AppData\Local\Programs\Python\Python39\lib\site-packages\playwright\_impl\_sync_base.py", line 115, in _sync
+    return task.result()
+  File "C:\Users\ishra\AppData\Local\Programs\Python\Python39\lib\site-packages\playwright\_impl\_page.py", line 397, in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+    self._sync(
+  File "C:\Users\ishra\AppData\Local\Programs\Python\Python39\lib\site-packages\playwright\_impl\_sync_base.py", line 115, in _sync
+    return task.result()
+  File "C:\Users\ishra\AppData\Local\Programs\Python\Python39\lib\site-packages\playwright\_impl\_page.py", line 397, in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+  File "C:\Users\ishra\AppData\Local\Programs\Python\Python39\lib\site-packages\playwright\_impl\_frame.py", line 323, in wait_for_selector
+    await self._channel.send("waitForSelector", locals_to_params(locals()))
+    await self._channel.send("waitForSelector", locals_to_params(locals()))
+  File "C:\Users\ishra\AppData\Local\Programs\Python\Python39\lib\site-packages\playwright\_impl\_connection.py", line 59, in send
+    return await self._connection.wrap_api_call(
+  File "C:\Users\ishra\AppData\Local\Programs\Python\Python39\lib\site-packages\playwright\_impl\_connection.py", line 514, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 30000ms exceeded.
+Call log:
+waiting for locator("div[id=searchResultsContainer]") to be visible
