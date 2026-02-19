@@ -1,6 +1,6 @@
 """
 Réalisation d'un web scraper qui permettra de répertorier tous les ouvrages de l'université de La Réunion
-qui comporte le mot "égalité"
+qui comportent le mot "égalité"
 """
 
 # Import divers 
@@ -8,7 +8,6 @@ from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 import openpyxl
 import re
-
 
 # Préparation du fichier .xslx
 excel = openpyxl.Workbook()
@@ -29,7 +28,7 @@ def get_content(offset):
         url = f'https://catalogue.univ-reunion.fr/primo-explore/search?query=any,contains,%C3%A9galit%C3%A9&tab=default_tab&search_scope=LSS_TOUT&vid=URN&offset={offset}'
         page.goto(url)
         
-        #Plusieurs wait pour être sûr que la page a le temps de charger tous le contenu qu'on recherche
+        #Plusieurs wait pour être sûr que la page ait le temps de charger tout le contenu qu'on recherche
         page.wait_for_selector("div[id=searchResultsContainer]")
         page.wait_for_selector("div[class=list-item-wrapper]")
         page.wait_for_selector(".result-item-details")
@@ -39,15 +38,6 @@ def get_content(offset):
         print("page", offset, "chargée")
         
         soup = BeautifulSoup(page.content(), 'lxml')
-
-        # bloc servant à repérer s'il y a une page suivante mais ce n'était pas fonctionnel
-        # à améliorer éventuellement...
-        """if page.locator('button[aria-label="Charger plus de résultat"]'):
-            print("selecteur")
-            new_offset = offset + 10
-        else:
-            print("pas de selecteur :()")
-            new_offset = 0"""
 
         browser.close()
         print("Ok pour récupérer le html de la page", offset)
@@ -89,7 +79,7 @@ def extract_content(offset):
         })
 
 
-    # Pour l'année, il y a parfois plus d'informations que necessaire, on va donc vérifier que l'on a bien que des années
+    # Pour l'année, il y a parfois plus d'informations que necessaire, on va donc vérifier que l'on n'a bien que des années
     for j in range(len(data)):
         if len(data[j]["Année"]) > 4:
             data[j]["Année"] = recup_annee(data[j]["Année"])[0]
@@ -109,6 +99,6 @@ def scraper():
         print("page", offset, "finie")
 
     excel.save("fichier_egalite.xlsx")
-    print("ok fini")
+    print("fichier enregistré")
 
 scraper()
